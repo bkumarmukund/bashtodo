@@ -31,7 +31,7 @@ add_task() {
 
 # Function to mark a task as complete
 complete_task() {
-    task_number=$1
+    task_number="$1"
     sed -i "${task_number}s/^/- [x] /" "$filename"
     $notify critical "Task $task_number marked as complete."
 }
