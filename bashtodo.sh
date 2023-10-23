@@ -52,7 +52,7 @@ delete_task() {
 }
 
 # Parse command-line options
-while getopts ":la:cd:" opt; do
+while getopts ":la:c:d:" opt; do
   case $opt in
     l)
       # List tasks
