@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TODO_FILE="tasks.txt"
+TODO_FILE="/home/user0/tasks.txt"
 
 # Function to add a task
 function add_task() {
