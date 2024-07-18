@@ -6,7 +6,8 @@ TODO_FILE="tasks.txt"
 function add_task() {
     task=$(rofi -dmenu -p "Enter task:")
     if [[ -n "$task" ]]; then
-        echo "[ ] $task" >> "$TODO_FILE"
+        # Prepend the new task to the top of the file
+        sed -i "1i[ ] $task" "$TODO_FILE"
         rofi -e "Task added: $task"
     fi
 }
@@ -19,11 +20,12 @@ function list_tasks() {
 
 # Function to mark a task as done
 function complete_task() {
-    tasks=$(cat "$TODO_FILE")
-    task=$(echo "$tasks" | rofi -dmenu -i -p "Complete task:")
-    
+    # Only show incomplete tasks in the completion list
+    incomplete_tasks=$(grep "^\[ \]" "$TODO_FILE")
+    task=$(echo "$incomplete_tasks" | rofi -dmenu -i -p "Complete task:")
+
     if [[ -n "$task" ]]; then
-        # Extract the actual task without the status marker
+        # Extract the actual task content without the status marker
         task_content=$(echo "$task" | sed 's/^\[.\] //')
         # Mark the task as completed in the file
         sed -i "s/^\[ \] $task_content$/[x] $task_content/" "$TODO_FILE"
